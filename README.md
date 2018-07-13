@@ -10,6 +10,7 @@ To see the result of script, please open: script_result.txt
 ### Prerequisites
 
 Vagrant and Virtual box installed in your Machine. (See this video for more information: https://www.youtube.com/watch?v=djnqoEO2rLc)
+Download DB - newsdata.sql - https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip
 
 
 ### Installing
@@ -26,7 +27,15 @@ vagrant up
 ```
 vagrant ssh
 ``` 
-5. Create Views (optional)
+5. Import DB newsdata.sql
+```
+psql -d news -f newsdata.sql
+``` 
+6. Access DB
+```
+psql -d news
+``` 
+7. Create Views (optional)
 ```
 CREATE or REPLACE VIEW error_view as SELECT time::date, count(status) as requests, status FROM log WHERE status != '200 OK' group by time::date, status;
 ```
@@ -37,7 +46,7 @@ CREATE or REPLACE VIEW success_view as SELECT time::date, count(status) as reque
 
 Obs. Don't worry about that view, you can run the program without it.
 
-6. Run "python new_db.py"
+8. Run "python new_db.py"
 ```
 python new_db.py
 ```
